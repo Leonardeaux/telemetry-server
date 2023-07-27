@@ -118,12 +118,8 @@ class SPageFileGraphic(Structure):
     def toDict(self):
         return {
             "bestTime": self.bestTime,
-            "iBestTime": self.iBestTime,
-            "lastTime": self.lastTime,
-            "iLastTime": self.iLastTime,
-            "sessionTimeLeft": self.sessionTimeLeft,
-            "estLapsLeft": self.sessionTimeLeft / (self.iLastTime + 1),
-            "fuelXLap": self.fuelXLap,
+            "completedLaps": self.completedLaps,
+            "distanceTraveled": self.distanceTraveled,
         }
 
 
@@ -215,14 +211,177 @@ class SPageFilePhysics(Structure):
         ("tyreTemp", c_float * 4),
     ]
 
-    def toArray(self):
-        return round(self.gas, 2), round(self.brake, 2), round(self.speedKmh, 0)
+    def toDict(self):
+        return {
+            "gas": self.gas,
+            "brake": self.brake,
+            # "fuel": self.fuel,
+            # "gear": self.gear,
+            # "rpms": self.rpms,
+            "steerAngle": self.steerAngle,
+            "speedKmh": self.speedKmh,
+            # "velocity": "{} {} {}".format(self.velocity[0], self.velocity[1], self.velocity[2]),
+            # "accG": self.accG,
+            # "wheelSlip": self.wheelSlip,
+            # "wheelLoad": self.wheelLoad,
+            # "wheelsPressure": self.wheelsPressure,
+            # "wheelAngularSpeed": self.wheelAngularSpeed,
+            # "tyreWear": self.tyreWear,
+            # "tyreDirtyLevel": self.tyreDirtyLevel,
+            # "tyreCoreTemperature": self.tyreCoreTemperature,
+            # "camberRAD": self.camberRAD,
+            # "suspensionTravel": self.suspensionTravel,
+            # "drs": self.drs,
+            # "tc": self.tc,
+            # "heading": self.heading,
+            # "pitch": self.pitch,
+            # "roll": self.roll,
+            # "cgHeight": self.cgHeight,
+            # "carDamage": self.carDamage,
+            # "numberOfTyresOut": self.numberOfTyresOut,
+            # "pitLimiterOn": self.pitLimiterOn,
+            "abs": self.abs,
+            # "kersCharge": self.kersCharge,
+            # "kersInput": self.kersInput,
+            # "autoShifterOn": self.autoShifterOn,
+            # "rideHeight": self.rideHeight,
+            # "turboBoost": self.turboBoost,
+            # "ballast": self.ballast,
+            # "airDensity": self.airDensity,
+            # "airTemp": self.airTemp,
+            # "roadTemp": self.roadTemp,
+            # "localAngularVel": self.localAngularVel,
+            # "finalFF": self.finalFF,
+            # "performanceMeter": self.performanceMeter,
+            # "engineBrake": self.engineBrake,
+            # "ersRecoveryLevel": self.ersRecoveryLevel,
+            # "ersPowerLevel": self.ersPowerLevel,
+            # "ersHeatCharging": self.ersHeatCharging,
+            # "ersIsCharging": self.ersIsCharging,
+            # "kersCurrentKJ": self.kersCurrentKJ,
+            # "drsAvailable": self.drsAvailable,
+            # "drsEnabled": self.drsEnabled,
+            # "brakeTemp": self.brakeTemp,
+            # "clutch": self.clutch,
+            # "tyreTempI": self.tyreTempI,
+            # "tyreTempM": self.tyreTempM,
+            # "tyreTempO": self.tyreTempO,
+            # "isAIControlled": self.isAIControlled,
+            # "tyreContactPoint": self.tyreContactPoint,
+            # "tyreContactNormal": self.tyreContactNormal,
+            # "tyreContactHeading": self.tyreContactHeading,
+            # "brakeBias": self.brakeBias,
+            # "localVelocity": self.localVelocity,
+            # "P2PActivations": self.P2PActivations,
+            # "P2PStatus": self.P2PStatus,
+            # "currentMaxRpm": self.currentMaxRpm,
+            # "mz": self.mz,
+            # "fx": self.fx,
+            # "fy": self.fy,
+            # "slipRatio": self.slipRatio,
+            # "slipAngle": self.slipAngle,
+            # "tcinAction": self.tcinAction,
+            # "absInAction": self.absInAction,
+            # "suspensionDamage": self.suspensionDamage,
+            # "tyreTemp": self.tyreTemp,
+        }
+
+    def toDict(self):
+        return {
+            "gas": self.gas,
+            "brake": self.brake,
+            # "fuel": self.fuel,
+            # "gear": self.gear,
+            # "rpms": self.rpms,
+            "steerAngle": self.steerAngle,
+            "speedKmh": self.speedKmh,
+            # "velocity": "{} {} {}".format(self.velocity[0], self.velocity[1], self.velocity[2]),
+            # "accG": self.accG,
+            # "wheelSlip": self.wheelSlip,
+            # "wheelLoad": self.wheelLoad,
+            # "wheelsPressure": self.wheelsPressure,
+            # "wheelAngularSpeed": self.wheelAngularSpeed,
+            # "tyreWear": self.tyreWear,
+            # "tyreDirtyLevel": self.tyreDirtyLevel,
+            # "tyreCoreTemperature": self.tyreCoreTemperature,
+            # "camberRAD": self.camberRAD,
+            # "suspensionTravel": self.suspensionTravel,
+            # "drs": self.drs,
+            # "tc": self.tc,
+            # "heading": self.heading,
+            # "pitch": self.pitch,
+            # "roll": self.roll,
+            # "cgHeight": self.cgHeight,
+            # "carDamage": self.carDamage,
+            # "numberOfTyresOut": self.numberOfTyresOut,
+            # "pitLimiterOn": self.pitLimiterOn,
+            "abs": self.abs,
+            # "kersCharge": self.kersCharge,
+            # "kersInput": self.kersInput,
+            # "autoShifterOn": self.autoShifterOn,
+            # "rideHeight": self.rideHeight,
+            # "turboBoost": self.turboBoost,
+            # "ballast": self.ballast,
+            # "airDensity": self.airDensity,
+            # "airTemp": self.airTemp,
+            # "roadTemp": self.roadTemp,
+            # "localAngularVel": self.localAngularVel,
+            # "finalFF": self.finalFF,
+            # "performanceMeter": self.performanceMeter,
+            # "engineBrake": self.engineBrake,
+            # "ersRecoveryLevel": self.ersRecoveryLevel,
+            # "ersPowerLevel": self.ersPowerLevel,
+            # "ersHeatCharging": self.ersHeatCharging,
+            # "ersIsCharging": self.ersIsCharging,
+            # "kersCurrentKJ": self.kersCurrentKJ,
+            # "drsAvailable": self.drsAvailable,
+            # "drsEnabled": self.drsEnabled,
+            # "brakeTemp": self.brakeTemp,
+            # "clutch": self.clutch,
+            # "tyreTempI": self.tyreTempI,
+            # "tyreTempM": self.tyreTempM,
+            # "tyreTempO": self.tyreTempO,
+            # "isAIControlled": self.isAIControlled,
+            # "tyreContactPoint": self.tyreContactPoint,
+            # "tyreContactNormal": self.tyreContactNormal,
+            # "tyreContactHeading": self.tyreContactHeading,
+            # "brakeBias": self.brakeBias,
+            # "localVelocity": self.localVelocity,
+            # "P2PActivations": self.P2PActivations,
+            # "P2PStatus": self.P2PStatus,
+            # "currentMaxRpm": self.currentMaxRpm,
+            # "mz": self.mz,
+            # "fx": self.fx,
+            # "fy": self.fy,
+            # "slipRatio": self.slipRatio,
+            # "slipAngle": self.slipAngle,
+            # "tcinAction": self.tcinAction,
+            # "absInAction": self.absInAction,
+            # "suspensionDamage": self.suspensionDamage,
+            # "tyreTemp": self.tyreTemp,
+        }
+
+    def transformation_factory(self, transformation: str):
+        return {
+            "speed_influence_per_gas_per_frames": self.speed_influence_per_gas_per_frames_transformation,
+            "speed_influence_per_brake_per_frames": self.speed_influence_per_brake_per_frames_transformation,
+            "mean_speed_by_laps_transformation": self.mean_speed_by_laps_transformation
+        }[transformation]()
+
+    def speed_influence_per_gas_per_frames_transformation(self):
+        pass
+
+    def speed_influence_per_brake_per_frames_transformation(self):
+        pass
+
+    def mean_speed_by_laps_transformation(self):
+        pass
 
 
 def read_physics():
     buf = mmap.mmap(-1, sizeof(SPageFilePhysics), u"Local\\acpmf_physics")
     data = SPageFilePhysics.from_buffer(buf)
-    return data.toArray()
+    return data.toDict()
 
 
 def read_static():
